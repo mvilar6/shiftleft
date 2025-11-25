@@ -1,4 +1,5 @@
-FROM alpine:3.20
+FROM alpine:3.21 
+#Canviar Alpine 3.20 per 3.21
 
 # Metadades útils
 LABEL org.opencontainers.image.description="Imatge bàsica per provar GitHub Actions + Trivy"
