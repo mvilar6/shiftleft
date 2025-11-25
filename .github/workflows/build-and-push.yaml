@@ -6,7 +6,7 @@ on:
     branches: [ "main" ]
 
 permissions:
-  contents: read
+  contents: write
 
 env:
   REGISTRY: quay.io
@@ -71,6 +71,19 @@ jobs:
             --fail-on high \
             --only-fixed=false \
             --add-cpes-if-none
+
+      - name: Commit SBOM to Repo
+        if: success()
+        run: |
+          mkdir -p sbom
+          cp sbom.syft.json sbom/sbom-${TAG}.json
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add sbom/sbom-${TAG}.json
+          git commit -m "Add SBOM for image tag ${TAG}" || echo "No changes to commit"
+          git push origin HEAD:main
 
 
       - name: Push image
