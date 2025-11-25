@@ -2,7 +2,7 @@ name: Build, scan and push
 
 on:
   push:
-    branches: [ "main" ]
+  branches: [ "main" ]
 
 permissions:
   contents: read
@@ -36,7 +36,7 @@ jobs:
           docker build -t "$FULL_IMAGE" .
 
       - name: Scan with Trivy
-        uses: aquasecurity/trivy-action@v0.33.1
+        uses: aquasecurity/trivy-action@v0.27.0
         with:
           image-ref: ${{ env.FULL_IMAGE }}
           severity: 'HIGH,CRITICAL'
